@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>My super nifty to-do list</h1>
+<ul id="list"></ul>
+<div>
+<input type="text" id="item" />
+<button id="add">add</button>
+<button id="remove">remove</button>
+</div>
+<script>
+const itemInput = document.getElementById("item");
+const addButton = document.getElementById("add");
+const removeButton = document.getElementById("remove");
+const list = document.getElementById("list");
+
+function updateColors() {
+    const items = list.getElementsByTagName("li");
+    for (let i = 0; i < items.length; i++) {
+        items[i].style.backgroundColor = (i % 2 === 0) ? "white" : "yellow";
+    }
+}
+addButton.addEventListener("click", () => {
+    const text = itemInput.value.trim();
+    if (text !== "") {
+        const words = text.split(/\s+/);
+        for (let word of words) {
+            const li = document.createElement("li");
+            li.textContent = word;
+            list.appendChild(li);
+        }
+        updateColors();
+    }
+    itemInput.value = ""; 
+    itemInput.focus(); 
+});
+removeButton.addEventListener("click", () => {
+    const text = itemInput.value.trim().toLowerCase();
+    if (text !== "") {
+        const items = list.getElementsByTagName("li");
+        for (let i = 0; i < items.length; i++) {
+            if (items[i].textContent.toLowerCase() === text) {
+                list.removeChild(items[i]);
+                break;
+            }
+        }
+        updateColors();
+    }
+    itemInput.value = "";
+    itemInput.focus();
+});
+
+</script>
+    
+</body>
+</html>
