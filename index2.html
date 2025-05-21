@@ -1,26 +1,279 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-        <title>Text Formatting Example</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Registration Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+        }
+        .form-container {
+            width: 600px;
+            margin: 0 auto;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            padding: 30px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 25px;
+        }
+        .form-group {
+            margin-bottom: 18px;
+            display: flex;
+            align-items: center;
+        }
+        .form-group label {
+            flex: 1.2;
+            margin-right: 15px;
+            text-align: right;
+            font-weight: bold;
+            color: #555;
+        }
+        .form-group input[type="text"],
+        .form-group input[type="email"],
+        .form-group input[type="date"],
+        .form-group textarea {
+            flex: 2;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 1em;
+        }
+        .form-group textarea {
+            resize: vertical;
+            min-height: 60px;
+        }
+        .form-group input[type="checkbox"] {
+            margin-left: 15px;
+            margin-right: 8px;
+        }
+        .error-message {
+            color: red;
+            margin-left: 10px;
+            font-size: 0.9em;
+            flex: 1.5;
+        }
+        .buttons {
+            text-align: center;
+            margin-top: 30px;
+        }
+        .buttons button {
+            padding: 12px 25px;
+            margin: 0 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background-color 0.3s ease;
+        }
+        .buttons button[type="submit"] {
+            background-color: #28a745;
+            color: white;
+        }
+        .buttons button[type="submit"]:hover {
+            background-color: #218838;
+        }
+        .buttons button[type="reset"] {
+            background-color: #dc3545;
+            color: white;
+        }
+        .buttons button[type="reset"]:hover {
+            background-color: #c82333;
+        }
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            flex: 2;
+        }
+        .checkbox-group label {
+            font-weight: normal; 
+            margin-left: 0;
+            text-align: left;
+            flex: none; 
+        }
+    </style>
 </head>
 <body>
-    
-    <center>
-    <h1>Text Formatting Tags in HTML</h1>
-    <hr>
-    <p><i>This text is italic.</i></p>
-    <p><u>This text is underlined.</u></p>
-    <p><b>This text is bold.</b></p>
-    <p><em>This text is emphasized.</em></p>
-    <p><strong>This text is strong</strong></p>
-    <p>My favorite color is <del>Stricked text</del></p>
-    <p>This is <sup>superscripted text</sup></p>
-    <p>This is <sub>subscripted</sub> text.</p>
-    <p><mark>This text is highlighted using the</mark></p>
-    <p>This is a<small> small text</small></p>
-    <hr>
-    
-    </center>
+
+    <div class="form-container">
+        <h2>Student Registration Form</h2>
+
+        <form id="studentRegistrationForm" onsubmit="return validateStudentForm()">
+            <div class="form-group">
+                <label for="studentName">Student Name:</label>
+                <input type="text" id="studentName" name="studentName">
+                <span class="error-message" id="studentNameError"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="registerNumber">Register Number:</label>
+                <input type="text" id="registerNumber" name="registerNumber">
+                <span class="error-message" id="registerNumberError"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="dob">Date of Birth:</label>
+                <input type="date" id="dob" name="dob">
+                <span class="error-message" id="dobError"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="program">Program:</label>
+                <input type="text" id="program" name="program">
+                <span class="error-message" id="programError"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="emailId">Email ID:</label>
+                <input type="email" id="emailId" name="emailId">
+                <span class="error-message" id="emailIdError"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="temporaryAddress">Temporary Address:</label>
+                <textarea id="temporaryAddress" name="temporaryAddress"></textarea>
+                <span class="error-message" id="temporaryAddressError"></span>
+            </div>
+
+            <div class="form-group">
+                <label></label>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="sameAsTemporary" onclick="copyAddress()">
+                    <label for="sameAsTemporary">Permanent address is same as temporary address</label>
+                </div>
+                <span class="error-message"></span> </div>
+
+
+            <div class="form-group">
+                <label for="permanentAddress">Permanent Address:</label>
+                <textarea id="permanentAddress" name="permanentAddress" disabled></textarea>
+                <span class="error-message" id="permanentAddressError"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="phoneNumber">Phone Number:</label>
+                <input type="text" id="phoneNumber" name="phoneNumber">
+                <span class="error-message" id="phoneNumberError"></span>
+            </div>
+
+            <div class="buttons">
+                <button type="submit">Register</button>
+                <button type="reset">Clear</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        function validateStudentForm() {
+            let isValid = true;
+            document.querySelectorAll('.error-message').forEach(span => span.textContent = '');
+
+            const studentName = document.getElementById('studentName').value.trim();
+            const namePattern = /^[A-Za-z\s]+$/; 
+            if (studentName === '') {
+                document.getElementById('studentNameError').textContent = 'Student Name is mandatory.';
+                isValid = false;
+            } else if (studentName.length > 30) {
+                document.getElementById('studentNameError').textContent = 'Name should not exceed 30 characters.';
+                isValid = false;
+            } else if (!namePattern.test(studentName)) {
+                document.getElementById('studentNameError').textContent = 'Name can only contain alphabets and spaces.';
+                isValid = false;
+            }
+            const registerNumber = document.getElementById('registerNumber').value.trim();
+            const regNumPattern = /^[A-Za-z0-9]+$/; 
+            if (registerNumber === '') {
+                document.getElementById('registerNumberError').textContent = 'Register Number is mandatory.';
+                isValid = false;
+            } else if (!regNumPattern.test(registerNumber)) {
+                document.getElementById('registerNumberError').textContent = 'Register number should have alphabets and numbers only.';
+                isValid = false;
+            }
+            const dob = document.getElementById('dob').value;
+            if (dob === '') {
+                document.getElementById('dobError').textContent = 'Date of Birth is mandatory.';
+                isValid = false;
+            } else {
+                const selectedDate = new Date(dob);
+                const currentDate = new Date();
+                if (selectedDate > currentDate) {
+                    document.getElementById('dobError').textContent = 'Date of Birth cannot be in the future.';
+                    isValid = false;
+                }
+            }
+            const program = document.getElementById('program').value.trim();
+            if (program === '') {
+                document.getElementById('programError').textContent = 'Program is mandatory.';
+                isValid = false;
+            }
+            const emailId = document.getElementById('emailId').value.trim();
+            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (emailId === '') {
+                document.getElementById('emailIdError').textContent = 'Email ID is mandatory.';
+                isValid = false;
+            } else if (!emailPattern.test(emailId)) {
+                document.getElementById('emailIdError').textContent = 'Please enter a valid email address.';
+                isValid = false;
+            }
+            const temporaryAddress = document.getElementById('temporaryAddress').value.trim();
+            if (temporaryAddress === '') {
+                document.getElementById('temporaryAddressError').textContent = 'Temporary Address is mandatory.';
+                isValid = false;
+            }
+
+            const permanentAddress = document.getElementById('permanentAddress').value.trim();
+            const sameAsTemporaryCheckbox = document.getElementById('sameAsTemporary');
+            if (!sameAsTemporaryCheckbox.checked && permanentAddress === '') {
+                document.getElementById('permanentAddressError').textContent = 'Permanent Address is mandatory.';
+                isValid = false;
+            }
+
+            const phoneNumber = document.getElementById('phoneNumber').value.trim();
+            const phonePattern = /^\d{10}$/; 
+            if (phoneNumber === '') {
+                document.getElementById('phoneNumberError').textContent = 'Phone Number is mandatory.';
+                isValid = false;
+            } else if (!phonePattern.test(phoneNumber)) {
+                document.getElementById('phoneNumberError').textContent = 'Mobile number should be exactly 10 digits.';
+                isValid = false;
+            }
+
+            if (isValid) {
+                alert('Student Registration Form submitted successfully!');
+               
+            }
+
+            return isValid; 
+        }
+
+        function copyAddress() {
+            const temporaryAddress = document.getElementById('temporaryAddress');
+            const permanentAddress = document.getElementById('permanentAddress');
+            const sameAsTemporaryCheckbox = document.getElementById('sameAsTemporary');
+
+            if (sameAsTemporaryCheckbox.checked) {
+                permanentAddress.value = temporaryAddress.value;
+                permanentAddress.disabled = true;
+            } else {
+                permanentAddress.value = '';
+                permanentAddress.disabled = false;
+            }
+        }
+
+        document.getElementById('temporaryAddress').addEventListener('input', function() {
+            const sameAsTemporaryCheckbox = document.getElementById('sameAsTemporary');
+            if (sameAsTemporaryCheckbox.checked) {
+                document.getElementById('permanentAddress').value = this.value;
+            }
+        });
+    </script>
 
 </body>
 </html>

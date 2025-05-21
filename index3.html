@@ -1,42 +1,158 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>HTML Lists Example</title>
-</head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Credit Card Validator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f0f8ff;
+            text-align: center;
+        }
+        .validator-container {
+            width: 400px;
+            margin: 50px auto;
+            background-color: #fff;
+            border: 1px solid #cceeff;
+            padding: 25px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+        h2 {
+            color: #0056b3;
+            margin-bottom: 20px;
+        }
+        input[type="text"] {
+            width: calc(100% - 22px);
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #aaddff;
+            border-radius: 5px;
+            font-size: 1em;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #validationResult {
+            margin-top: 20px;
+            padding: 10px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        .success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 25px;
+            font-size: 0.9em;
+        }
+        table, th, td {
+            border: 1px solid #ccc;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #e9ecef;
+        }
+    </style>
 </head>
 <body>
-    
-    <h1>Types of Lists in HTML</h1><br>
-    <hr>
-    <h2>Ordered List</h2>
-    <ol>
-        <li>Wake up</li>
-        <li>Brush teeth</li>
-        <ol type="a">
-            <li>Eat</li>
-            <li>Drink</li>
-            <ol type="i">
-                <li>Wash hands</li>
-                <li>Wash Tools</li>
-    
-            </ol>
-        </ol>
-        
-        <li>Take a shower</li>
-    </ol>
 
-    <h2>Definition List</h2>
-    <dl>
-        <dt>HTML</dt>
-        <dd>A markup language used to create web pages.</dd>
+    <div class="validator-container">
+        <h2>Credit Card Number Validation</h2>
+        <p>Enter a credit card number to validate:</p>
+        <input type="text" id="creditCardNumber" placeholder="e.g., 341234567890123">
+        <button onclick="validateCreditCard()">Validate</button>
+        <div id="validationResult"></div>
 
-        <dt>CSS</dt>
-        <dd>A style sheet language used to describe the look of a document.</dd>
+        <h3>Validation Criteria:</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Card Type</th>
+                    <th>Start with</th>
+                    <th>Length</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>American Express</td><td>34, 37</td><td>15</td></tr>
+                <tr><td>Master Card</td><td>51-55</td><td>16</td></tr>
+                <tr><td>VISA</td><td>4</td><td>13, 16</td></tr>
+                <tr><td>Discover</td><td>6011</td><td>15, 16</td></tr>
+                <tr><td>Diners Club</td><td>300-305</td><td>14, 16</td></tr>
+            </tbody>
+        </table>
+    </div>
 
-        <dt>JavaScript</dt>
-        <dd>A programming language used to create dynamic web content.</dd>
-    </dl>
-    <hr>
+    <script>
+        function validateCreditCard() {
+            const cardNumber = document.getElementById('creditCardNumber').value.replace(/\s/g, '');
+            const resultDiv = document.getElementById('validationResult');
+            resultDiv.className = ''; 
+            resultDiv.textContent = ''; 
+
+            if (cardNumber === '') {
+                resultDiv.textContent = 'Please enter a credit card number.';
+                resultDiv.classList.add('error');
+                return;
+            }
+
+            if (/^(34|37)\d{13}$/.test(cardNumber)) {
+                resultDiv.textContent = 'Valid American Express Card.';
+                resultDiv.classList.add('success');
+                return;
+            }
+
+            if (/^5[1-5]\d{14}$/.test(cardNumber)) {
+                resultDiv.textContent = 'Valid Master Card.';
+                resultDiv.classList.add('success');
+                return;
+            }
+
+            if (/^4(\d{12}|\d{15})$/.test(cardNumber)) {
+                resultDiv.textContent = 'Valid VISA Card.';
+                resultDiv.classList.add('success');
+                return;
+            }
+
+            if (/^6011(\d{11}|\d{12})$/.test(cardNumber)) {
+                resultDiv.textContent = 'Valid Discover Card.';
+                resultDiv.classList.add('success');
+                return;
+            }
+
+            if (/^30[0-5](\d{11}|\d{13})$/.test(cardNumber)) {
+                resultDiv.textContent = 'Valid Diners Club Card.';
+                resultDiv.classList.add('success');
+                return;
+            }
+            resultDiv.textContent = 'Invalid Credit Card Number or Unsupported Type.';
+            resultDiv.classList.add('error');
+        }
+    </script>
 
 </body>
 </html>

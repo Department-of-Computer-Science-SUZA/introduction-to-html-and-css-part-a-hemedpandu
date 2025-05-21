@@ -1,42 +1,250 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Java Program Example</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test JavaScript Form Validation</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            color: white;
-            padding: 20px;
+            margin: 20px;
         }
-        pre {
-            background-color: rgba(50, 41, 167, 0.7);
-            padding: 15px;
-            border-radius: 5px;
-            overflow-x: auto;
+        .form-container {
+            width: 500px;
+            margin: 0 auto;
+            border: 1px solid #ccc;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .form-group {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        .form-group label {
+            flex: 1;
+            margin-right: 10px;
+            text-align: right;
+            white-space: nowrap;
+        }
+        .form-group input[type="text"],
+        .form-group input[type="email"],
+        .form-group input[type="password"],
+        .form-group select,
+        .form-group textarea {
+            flex: 2;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .form-group input[type="radio"],
+        .form-group input[type="checkbox"] {
+            margin-right: 5px;
+        }
+        .form-group .radio-group,
+        .form-group .checkbox-group {
+            flex: 2;
+            display: flex;
+            align-items: center;
+        }
+        .error-message {
+            color: red;
+            margin-left: 10px;
+            flex: 1;
+        }
+        .buttons {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .buttons button {
+            padding: 10px 20px;
+            margin: 0 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .buttons button[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+        }
+        .buttons button[type="reset"] {
+            background-color: #f44336;
+            color: white;
         }
     </style>
 </head>
 <body>
-    <h1>Java Program Example</h1>
-    <h2>Explanation:</h2>
-    <p>This is a simple Java program that calculates the sum of two numbers and displays the result.</p>
-    <h2>Program Code:</h2>
-    <pre>
-public class SumCalculator {
-    public static void main(String[] args) {
-        int num1 = 5;
-        int num2 = 7;
-        
-        int sum = num1 + num2;
-        
-        System.out.println("The sum of " + num1 + " and " + num2 + " is: " + sum);
-    }
-}
-    </pre>
-    
-    <h2>Output:</h2>
-    <pre>
-The sum of 5 and 7 is: 12
-    </pre>
+
+    <div class="form-container">
+        <h1>Test JavaScript Form Validation</h1>
+
+        <form id="myForm" onsubmit="return validateForm()">
+            <div class="form-group">
+                <label for="name">Name*</label>
+                <input type="text" id="name" name="name">
+                <span class="error-message" id="nameError"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="address">Address</label>
+                <textarea id="address" name="address" rows="3"></textarea>
+                <span class="error-message" id="addressError"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="zipCode">Zip Code*</label>
+                <input type="text" id="zipCode" name="zipCode">
+                <span class="error-message" id="zipCodeError"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="country">Country*</label>
+                <select id="country" name="country">
+                    <option value="">Please select...</option>
+                    <option value="USA">USA</option>
+                    <option value="Canada">Canada</option>
+                    <option value="UK">UK</option>
+                    <option value="Australia">Australia</option>
+                    <option value="Tanzania">Tanzania</option>
+                    <option value="Kenya">Kenya</option>
+                </select>
+                <span class="error-message" id="countryError"></span>
+            </div>
+
+            <div class="form-group">
+                <label>Gender*</label>
+                <div class="radio-group">
+                    <input type="radio" id="male" name="gender" value="Male">
+                    <label for="male">Male</label>
+                    <input type="radio" id="female" name="gender" value="Female">
+                    <label for="female">Female</label>
+                </div>
+                <span class="error-message" id="genderError"></span>
+            </div>
+
+            <div class="form-group">
+                <label>Preferences*</label>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="red" name="preferences" value="Red">
+                    <label for="red">Red</label>
+                    <input type="checkbox" id="green" name="preferences" value="Green">
+                    <label for="green">Green</label>
+                    <input type="checkbox" id="blue" name="preferences" value="Blue">
+                    <label for="blue">Blue</label>
+                </div>
+                <span class="error-message" id="preferencesError"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="phone">Phone*</label>
+                <input type="text" id="phone" name="phone">
+                <span class="error-message" id="phoneError"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email*</label>
+                <input type="email" id="email" name="email">
+                <span class="error-message" id="emailError"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="password">password (6-8 characters)*</label>
+                <input type="password" id="password" name="password">
+                <span class="error-message" id="passwordError"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="verifyPassword">Verify password*</label>
+                <input type="password" id="verifyPassword" name="verifyPassword">
+                <span class="error-message" id="verifyPasswordError"></span>
+            </div>
+
+            <div class="buttons">
+                <button type="submit">SEND</button>
+                <button type="reset">CLEAR</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        function validateForm() {
+            let isValid = true;
+            document.querySelectorAll('.error-message').forEach(span => span.textContent = '');
+
+            const name = document.getElementById('name').value.trim();
+            if (name === '') {
+                document.getElementById('nameError').textContent = 'Please enter your name!';
+                isValid = false;
+            } else if (name.length > 20) {
+                document.getElementById('nameError').textContent = 'Name should not exceed 20 characters.';
+                isValid = false;
+            }
+
+            const address = document.getElementById('address').value.trim();
+            
+            const zipCode = document.getElementById('zipCode').value.trim();
+            if (zipCode === '') {
+                document.getElementById('zipCodeError').textContent = 'Zip Code is mandatory.';
+                isValid = false;
+            }
+
+            const country = document.getElementById('country').value;
+            if (country === '') {
+                document.getElementById('countryError').textContent = 'Please select a country.';
+                isValid = false;
+            }
+            const genderMale = document.getElementById('male').checked;
+            const genderFemale = document.getElementById('female').checked;
+            if (!genderMale && !genderFemale) {
+                document.getElementById('genderError').textContent = 'Please select your gender.';
+                isValid = false;
+            }
+
+            const preferences = document.querySelectorAll('input[name="preferences"]:checked');
+            if (preferences.length < 2) {
+                document.getElementById('preferencesError').textContent = 'Please select at least two preferences.';
+                isValid = false;
+            }
+            const phone = document.getElementById('phone').value.trim();
+            if (phone === '') {
+                document.getElementById('phoneError').textContent = 'Phone number is mandatory.';
+                isValid = false;
+            }
+           
+            const email = document.getElementById('email').value.trim();
+            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (email === '') {
+                document.getElementById('emailError').textContent = 'Email is mandatory.';
+                isValid = false;
+            } else if (!emailPattern.test(email)) {
+                document.getElementById('emailError').textContent = 'Please enter a valid email address.';
+                isValid = false;
+            }
+            const password = document.getElementById('password').value;
+            if (password === '') {
+                document.getElementById('passwordError').textContent = 'Password is mandatory.';
+                isValid = false;
+            } else if (password.length < 6 || password.length > 8) {
+                document.getElementById('passwordError').textContent = 'Password must be 6-8 characters long.';
+                isValid = false;
+            }
+            const verifyPassword = document.getElementById('verifyPassword').value;
+            if (verifyPassword === '') {
+                document.getElementById('verifyPasswordError').textContent = 'Verify password is mandatory.';
+                isValid = false;
+            } else if (verifyPassword !== password) {
+                document.getElementById('verifyPasswordError').textContent = 'Passwords do not match.';
+                isValid = false;
+            }
+
+            if (isValid) {
+                alert('Form submitted successfully!');
+            }
+
+            return isValid;
+        }
+    </script>
+
 </body>
 </html>
